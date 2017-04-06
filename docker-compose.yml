@@ -108,7 +108,7 @@ services:
       - MYSQL_PASSWORD=Password1!
 
  nextcloud:
-    image: ./nextcloud
+    build: nextcloud
     domainname: example.com
     hostname: nextcloud
     environment:
@@ -152,10 +152,15 @@ services:
   volumes:
    - './srv/nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
    - './srv/nginx/conf.d:/etc/nginx/conf.d:ro'
-   - './srv/nginx/certs:/etc/nginx/certs:rw'
-   - './srv/etc/letsencrypt:/etc/letsencrypt:ro'
+   - './srv/nginx/certs:/etc/nginx/certs:ro'
   ports:
    - "80:80"
    - "443:443"
 
-##### volumes #####
+ certbot:
+  image: certbot/certbot
+  domainname: example.com
+  hostname: certbot
+  command: 'certonly -n --standalone --agree-tos --email admin@example.com -d example.com -d www.example.com -d downloads.example.com -d nextcloud.example.com -d gitlab.example.com -d jenkins.example.com'
+  volumes:
+   - './srv/nginx/certs:/etc/letsencrypt:rw'

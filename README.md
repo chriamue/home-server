@@ -71,21 +71,29 @@ Start new SERVICE:
 To test locally change `127.0.0.1 localhost jenkins.localhost lam.localhost gitlab.localhost`
 in your /etc/hosts file.
 
+### renew your certificates
+
+```bash
+docker-compose stop nginx
+docker-compose run --rm certbot
+docker-compose start nginx
+```
+
 ## [lam](ldap-account-manager/README.md) (ldap account manager)
 
-Open ldap account manager in browser: http://lam.localhost
+Open ldap account manager in browser: [http://lam.localhost]()
 
 ## [Jenkins](jenkins/README.md)
 
-Open Jenkins in browser: http://jenkins.localhost
+Open Jenkins in browser: [http://jenkins.localhost]()
 
 ## [Gitlab](gitlab/README.md)
 
-Open Gitlab in browser: http://gitlab.localhost
+Open Gitlab in browser: [http://gitlab.localhost]()
 
 ## [Nextcloud](nextcloud/README.md)
 
-Open Nextcloud in browser: http://nextcloud.localhost
+Open Nextcloud in browser: [http://nextcloud.localhost]()
 
 ## [Nginx](nginx/README.md)
 
