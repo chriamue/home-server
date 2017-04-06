@@ -1,0 +1,1 @@
+FROM wonderfall/nextcloud:11.0

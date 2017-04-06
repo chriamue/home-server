@@ -3,6 +3,7 @@ Docker containers for a small server environment.
 
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
 * [jenkins](https://en.wikipedia.org/wiki/Jenkins_(software))
+* [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
 * [nginx](https://en.wikipedia.org/wiki/Nginx)
 
 The users will be managed through [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
@@ -81,6 +82,10 @@ Open Jenkins in browser: http://jenkins.localhost
 ## [Gitlab](gitlab/README.md)
 
 Open Gitlab in browser: http://gitlab.localhost
+
+## [Nextcloud](nextcloud/README.md)
+
+Open Nextcloud in browser: http://nextcloud.localhost
 
 ## [Nginx](nginx/README.md)
 

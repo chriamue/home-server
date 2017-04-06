@@ -96,6 +96,45 @@ services:
   depends_on:
    - openldap
 
+### nextcloud ###
+ nextcloud-db:
+    image: mariadb
+    volumes:
+      - './srv/nextcloud/db-data:/var/lib/mysql'
+    environment:
+      - MYSQL_ROOT_PASSWORD=Password1!
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=Password1!
+
+ nextcloud:
+    image: ./nextcloud
+    domainname: example.com
+    hostname: nextcloud
+    environment:
+      - UID=1000
+      - GID=1000
+      - UPLOAD_MAX_SIZE=10G
+      - APC_SHM_SIZE=128M
+      - OPCACHE_MEM_SIZE=128
+      - REDIS_MAX_MEMORY=64mb
+      - CRON_PERIOD=15m
+      - TZ=CET
+      - ADMIN_USER=root
+      - ADMIN_PASSWORD=Password1!
+      - DB_TYPE=mysql
+      - DB_NAME=nextcloud
+      - DB_USER=nextcloud
+      - DB_PASSWORD=Password1!
+      - DB_HOST=nextcloud-db
+    depends_on:
+      - nextcloud-db
+    volumes:
+      - './srv/nextcloud/data:/data'
+      - './srv/nextcloud/config:/config'
+      - './srv/nextcloud/apps:/apps2'
+
+
 ### downloads ###
  downloads:
   build: ./downloads
