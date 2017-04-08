@@ -24,6 +24,8 @@ Create your own branch:
 
 Edit compose for your needs:
 
+```vim .env```
+
 ```vim docker-compose.yml```
 
 Commit your changes:
@@ -41,6 +43,20 @@ Run docker compose:
 Stop docker compose:
 
 ```docker-compose stop```
+
+## restart server
+
+After a reboot you have to restart the services manually.
+Start them in following order.
+
+```bash
+docker-compose start openldap
+docker-compose start ldapaccountmanager
+docker-compose start downloads
+docker-compose start gitlab
+docker-compose start jenkins
+docker-compose start nginx
+```
 
 ## update git repo
 
@@ -71,7 +87,7 @@ Start new SERVICE:
 To test locally change `127.0.0.1 localhost jenkins.localhost lam.localhost gitlab.localhost`
 in your /etc/hosts file.
 
-## btrfs
+### btrfs
 
 Use a btrfs filesystem.
 Create a subvolume for data persistence.
@@ -87,6 +103,21 @@ sudo btrfs subvolume create srv
 docker-compose stop nginx
 docker-compose run --rm certbot
 docker-compose start nginx
+```
+
+### upgrade gitlab
+
+If you have problems upgrading gitlab, try this:
+
+```bash
+docker run -P -ti -v /srv/data/var/lib/gitlab:/var/opt/gitlab -v /srv/data/etc/gitlab:/etc/gitlab -v /srv/data/var/log/gitlab:/var/log/gitlab --rm gitlab/gitlab-ce bash
+```
+
+Inside container run:
+
+```bash
+update-permissions
+/opt/gitlab/embedded/bin/runsvdir-start & sleep 10 && gitlab-ctl reconfigure
 ```
 
 ## [lam](ldap-account-manager/README.md) (ldap account manager)
