@@ -71,6 +71,16 @@ Start new SERVICE:
 To test locally change `127.0.0.1 localhost jenkins.localhost lam.localhost gitlab.localhost`
 in your /etc/hosts file.
 
+## btrfs
+
+Use a btrfs filesystem.
+Create a subvolume for data persistence.
+
+```bash
+cd /
+sudo btrfs subvolume create srv
+```
+
 ### renew your certificates
 
 ```bash
@@ -102,3 +112,5 @@ Web server here used as proxy to the services.
 ## [OpenLDAP](openldap/README.md)
 
 ## [downloads](downloads/README.md)
+
+## [backup](backup/README.md)

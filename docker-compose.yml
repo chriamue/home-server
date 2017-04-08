@@ -35,9 +35,9 @@ services:
   tty: true
   stdin_open: true
   volumes:
-    - './srv/var/lib/ldap:/var/lib/ldap'
-    - './srv/etc/ldap/slapd.d:/etc/ldap/slapd.d'
-    #- './srv/container/service/slapd/assets/certs/:/container/service/slapd/assets/certs/'
+    - './srv/data/var/lib/ldap:/var/lib/ldap'
+    - './srv/data/etc/ldap/slapd.d:/etc/ldap/slapd.d'
+    #- './srv/data/container/service/slapd/assets/certs/:/container/service/slapd/assets/certs/'
   ports:
     #- "389:389"
     - "636:636"
@@ -48,7 +48,7 @@ services:
   domainname: ${DOMAINNAME}
   hostname: ldapaccountmanager
   volumes:
-   - './srv/var/lib/ldap-account-manager/config:/var/lib/ldap-account-manager/config'
+   - './srv/data/var/lib/ldap-account-manager/config:/var/lib/ldap-account-manager/config'
   depends_on:
    - openldap
 
@@ -59,8 +59,8 @@ services:
   domainname: ${DOMAINNAME}
   hostname: jenkins
   volumes:
-   - './srv/var/jenkins_home:/var/jenkins_home'
-   - './srv/downloads:/downloads'
+   - './srv/data/var/jenkins_home:/var/jenkins_home'
+   - './srv/data/downloads:/downloads'
   depends_on:
    - openldap
   ports:
@@ -115,9 +115,9 @@ services:
 #  - '80:80'
    - '2224:22'
   volumes:
-   - './srv/etc/gitlab:/etc/gitlab'
-   - './srv/var/opt/gitlab:/var/opt/gitlab'
-   - './srv/var/log/gitlab:/var/log/gitlab'
+   - './srv/data/etc/gitlab:/etc/gitlab'
+   - './srv/data/var/opt/gitlab:/var/opt/gitlab'
+   - './srv/data/var/log/gitlab:/var/log/gitlab'
    - '/etc/localtime:/etc/localtime:ro'
   depends_on:
    - openldap
@@ -127,7 +127,7 @@ services:
     image: mariadb
     domainname: ${DOMAINNAME}
     volumes:
-      - './srv/nextcloud/db-data:/var/lib/mysql'
+      - './srv/data/nextcloud/db-data:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
       - MYSQL_DATABASE=nextcloud
@@ -158,9 +158,9 @@ services:
       - nextcloud-db
       - openldap
     volumes:
-      - './srv/nextcloud/data:/data'
-      - './srv/nextcloud/config:/config'
-      - './srv/nextcloud/apps:/apps2'
+      - './srv/data/nextcloud/data:/data'
+      - './srv/data/nextcloud/config:/config'
+      - './srv/data/nextcloud/apps:/apps2'
 
 
 ### downloads ###
@@ -169,7 +169,7 @@ services:
   domainname: ${DOMAINNAME}
   hostname: downloads
   volumes:
-   - './srv/downloads:/usr/local/apache2/htdocs/:ro'
+   - './srv/data/downloads:/usr/local/apache2/htdocs/:ro'
 
 ### nginx ###
  nginx:
@@ -178,9 +178,9 @@ services:
   domainname: ${DOMAINNAME}
   hostname: nginx
   volumes:
-   - './srv/nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
-   - './srv/nginx/conf.d:/etc/nginx/conf.d:ro'
-   - './srv/nginx/certs:/etc/nginx/certs:ro'
+   - './srv/data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
+   - './srv/data/nginx/conf.d:/etc/nginx/conf.d:ro'
+   - './srv/data/nginx/certs:/etc/nginx/certs:ro'
   ports:
    - "80:80"
    - "443:443"
@@ -193,4 +193,4 @@ services:
   hostname: certbot
   command: 'certonly -n --standalone --agree-tos --email admin@${DOMAINNAME} -d ${DOMAINNAME} -d www.${DOMAINNAME} -d downloads.${DOMAINNAME} -d nextcloud.${DOMAINNAME} -d gitlab.${DOMAINNAME} -d jenkins.${DOMAINNAME}'
   volumes:
-   - './srv/nginx/certs:/etc/letsencrypt:rw'
+   - './srv/data/nginx/certs:/etc/letsencrypt:rw'
