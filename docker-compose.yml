@@ -192,5 +192,8 @@ services:
   domainname: ${DOMAINNAME}
   hostname: certbot
   command: 'certonly -n --standalone --agree-tos --email admin@${DOMAINNAME} -d ${DOMAINNAME} -d www.${DOMAINNAME} -d downloads.${DOMAINNAME} -d nextcloud.${DOMAINNAME} -d gitlab.${DOMAINNAME} -d jenkins.${DOMAINNAME}'
+  ports:
+   - "80:80"
+   - "443:443"
   volumes:
    - './srv/data/nginx/certs:/etc/letsencrypt:rw'

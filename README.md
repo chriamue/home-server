@@ -100,9 +100,9 @@ sudo btrfs subvolume create srv
 ### renew your certificates
 
 ```bash
-docker-compose stop nginx
+docker-compose stop
 docker-compose run --rm certbot
-docker-compose start nginx
+docker-compose start ...
 ```
 
 ### upgrade gitlab
