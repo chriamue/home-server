@@ -76,6 +76,8 @@ services:
   environment:
    GITLAB_OMNIBUS_CONFIG: |
     external_url 'https://gitlab.${DOMAINNAME}'
+    gitlab_rails['mattermost_host'] = 'https://mattermost.${DOMAINNAME}'
+    mattermost['email_enable_sign_up_with_email'] = false
     gitlab_rails['gitlab_shell_ssh_port'] = 2224
     gitlab_rails['gitlab_email_from'] = 'gitlab@${DOMAINNAME}'
     gitlab_rails['gitlab_email_reply_to'] = 'noreply@${DOMAINNAME}'

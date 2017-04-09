@@ -3,6 +3,7 @@ Docker containers for a small server environment.
 
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
 * [jenkins](https://en.wikipedia.org/wiki/Jenkins_(software))
+* [mattermost](https://about.mattermost.com/)
 * [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
 * [nginx](https://en.wikipedia.org/wiki/Nginx)
 
@@ -55,6 +56,8 @@ docker-compose start ldapaccountmanager
 docker-compose start downloads
 docker-compose start gitlab
 docker-compose start jenkins
+docker-compose start nextcloud-db
+docker-compose start nextcloud
 docker-compose start nginx
 ```
 
@@ -101,7 +104,7 @@ sudo btrfs subvolume create srv
 
 ```bash
 docker-compose stop
-docker-compose run --rm certbot
+docker-compose run --rm -p 80:80 -p 443:443 certbot
 docker-compose start ...
 ```
 
@@ -131,6 +134,10 @@ Open Jenkins in browser: [http://jenkins.localhost]()
 ## [Gitlab](gitlab/README.md)
 
 Open Gitlab in browser: [http://gitlab.localhost]()
+
+## [Mattermost](gitlab/README.md)
+
+Open Mattermost in browser: [http://mattermost.localhost]()
 
 ## [Nextcloud](nextcloud/README.md)
 

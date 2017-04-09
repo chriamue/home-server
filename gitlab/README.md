@@ -6,3 +6,11 @@ For more information and versions visit:
 ## Usage
 
 Open Gitlab in browser: [http://gitlab.localhost]()
+
+# Mattermost
+
+Mattermost is enabled within the gitlab container.
+
+## Usage
+
+Open Mattermost in browser: [http://mattermost.localhost]()
