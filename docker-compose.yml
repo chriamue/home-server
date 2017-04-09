@@ -76,8 +76,7 @@ services:
   environment:
    GITLAB_OMNIBUS_CONFIG: |
     external_url 'https://gitlab.${DOMAINNAME}'
-    gitlab_rails['mattermost_host'] = 'https://mattermost.${DOMAINNAME}'
-    mattermost['email_enable_sign_up_with_email'] = false
+    mattermost_external_url 'https://mattermost.${DOMAINNAME}'
     gitlab_rails['gitlab_shell_ssh_port'] = 2224
     gitlab_rails['gitlab_email_from'] = 'gitlab@${DOMAINNAME}'
     gitlab_rails['gitlab_email_reply_to'] = 'noreply@${DOMAINNAME}'
@@ -120,6 +119,10 @@ services:
    - './srv/data/etc/gitlab:/etc/gitlab'
    - './srv/data/var/opt/gitlab:/var/opt/gitlab'
    - './srv/data/var/log/gitlab:/var/log/gitlab'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/certs/ssl/gitlab.${DOMAINNAME}.key'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/certs/ssl/mattermost.${DOMAINNAME}.key'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/certs/ssl/gitlab.${DOMAINNAME}.crt'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/certs/ssl/mattermost.${DOMAINNAME}.crt'
    - '/etc/localtime:/etc/localtime:ro'
   depends_on:
    - openldap

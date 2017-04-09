@@ -102,6 +102,8 @@ sudo btrfs subvolume create srv
 
 ### renew your certificates
 
+Add ```--expand``` to certbot command in docker-compose.yml file.
+
 ```bash
 docker-compose stop
 docker-compose run --rm -p 80:80 -p 443:443 certbot
