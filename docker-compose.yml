@@ -139,6 +139,12 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
 
+ nextcloud-redis:
+   image: redis:alpine
+   domainname: ${DOMAINNAME}
+   volumes:
+      - './srv/data/nextcloud/redis-data:/data'
+
  nextcloud:
     build: nextcloud
     domainname: ${DOMAINNAME}
@@ -161,6 +167,7 @@ services:
       - DB_HOST=nextcloud-db
     depends_on:
       - nextcloud-db
+      - nextcloud-redis
       - openldap
     volumes:
       - './srv/data/nextcloud/data:/data'

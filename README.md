@@ -7,7 +7,7 @@ Docker containers for a small server environment.
 * [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
 * [nginx](https://en.wikipedia.org/wiki/Nginx)
 
-The users will be managed through [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
+The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
 ## Quick Start
 
