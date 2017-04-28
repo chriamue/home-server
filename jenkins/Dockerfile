@@ -1,4 +1,4 @@
-FROM jenkins
+FROM jenkins:2.46.2
 USER root
 RUN apt-get update
 RUN apt-get install -y clang cmake doxygen doxygen-latex graphviz libboost-all-dev libpoco-dev libopencv-dev qt5-default qttools5-dev  g++ libsqlite3-dev imagemagick texlive-latex-extra texlive-fonts-extra texlive-science cppcheck wget python valgrind
