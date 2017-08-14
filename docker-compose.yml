@@ -116,9 +116,9 @@ services:
 #  - '80:80'
    - '2224:22'
   volumes:
-   - './srv/data/etc/gitlab:/etc/gitlab'
-   - './srv/data/var/opt/gitlab:/var/opt/gitlab'
-   - './srv/data/var/log/gitlab:/var/log/gitlab'
+   - './srv/data/gitlab/config:/etc/gitlab'
+   - './srv/data/gitlab/logs:/var/log/gitlab'
+   - './srv/data/gitlab/data:/var/opt/gitlab'
    - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/certs/ssl/gitlab.${DOMAINNAME}.key'
    - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/certs/ssl/mattermost.${DOMAINNAME}.key'
    - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/certs/ssl/gitlab.${DOMAINNAME}.crt'
