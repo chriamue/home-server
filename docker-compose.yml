@@ -119,10 +119,10 @@ services:
    - './srv/data/gitlab/config:/etc/gitlab'
    - './srv/data/gitlab/logs:/var/log/gitlab'
    - './srv/data/gitlab/data:/var/opt/gitlab'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/certs/ssl/gitlab.${DOMAINNAME}.key'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/certs/ssl/mattermost.${DOMAINNAME}.key'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/certs/ssl/gitlab.${DOMAINNAME}.crt'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/certs/ssl/mattermost.${DOMAINNAME}.crt'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/ssl/gitlab.${DOMAINNAME}.key'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/ssl/mattermost.${DOMAINNAME}.key'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/ssl/gitlab.${DOMAINNAME}.crt'
+   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/ssl/mattermost.${DOMAINNAME}.crt'
    - '/etc/localtime:/etc/localtime:ro'
   depends_on:
    - openldap
