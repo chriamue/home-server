@@ -48,7 +48,7 @@ services:
   domainname: ${DOMAINNAME}
   hostname: ldapaccountmanager
   volumes:
-   - './srv/data/var/lib/ldap-account-manager/config:/var/lib/ldap-account-manager/config'
+   - './srv/data/var/lib/ldap-account-manager/:/var/lib/ldap-account-manager/:rw'
   depends_on:
    - openldap
 
