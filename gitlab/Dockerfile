@@ -1,1 +1,1 @@
-FROM gitlab/gitlab-ce:9.4.4-ce.0
+FROM gitlab/gitlab-ce:9.5.10-ce.0
