@@ -1,1 +1,1 @@
-FROM h3nrik/nginx-ldap:1.11.3
+FROM nginx:1.15
