@@ -76,6 +76,7 @@ services:
   environment:
    GITLAB_OMNIBUS_CONFIG: |
     external_url 'https://gitlab.${DOMAINNAME}'
+    registry_external_url 'https://gitlab.${DOMAINNAME}:4567'
     mattermost_external_url 'https://mattermost.${DOMAINNAME}'
     gitlab_rails['gitlab_shell_ssh_port'] = 2224
     gitlab_rails['gitlab_email_from'] = 'gitlab@${DOMAINNAME}'
@@ -115,6 +116,7 @@ services:
   ports:
 #  - '80:80'
    - '2224:22'
+   - '4567:4567'
   volumes:
    - './srv/data/gitlab/config:/etc/gitlab'
    - './srv/data/gitlab/logs:/var/log/gitlab'
