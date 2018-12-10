@@ -127,6 +127,9 @@ services:
   depends_on:
    - openldap
 
+ plantuml:
+  image: plantuml/plantuml-server:tomcat
+
 ### nextcloud ###
  nextcloud-db:
     image: mariadb
