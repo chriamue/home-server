@@ -1,1 +1,1 @@
-FROM wonderfall/nextcloud:13
+FROM wonderfall/nextcloud:15
