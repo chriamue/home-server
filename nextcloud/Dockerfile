@@ -1,1 +1,1 @@
-FROM benyanke/nextcloud:18
+FROM benyanke/nextcloud:18-alpha
