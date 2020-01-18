@@ -1,1 +1,1 @@
-FROM wonderfall/nextcloud:15
+FROM benyanke/nextcloud:18
