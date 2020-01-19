@@ -235,3 +235,19 @@ services:
    - "443:443"
   volumes:
    - './srv/data/nginx/certs:/etc/letsencrypt:rw'
+
+### vpn ###
+
+ vpn:
+  build:
+   context: ./wireguard
+  domainname: ${DOMAINNAME}
+  hostname: vpn
+  volumes:
+   - './srv/data/etc/wireguard:/etc/wireguard'
+  ports:
+   - 5555:5555/udp
+  restart: unless-stopped
+  cap_add:
+   - NET_ADMIN
+   - SYS_MODULE
