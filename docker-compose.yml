@@ -247,7 +247,6 @@ services:
    - './srv/data/etc/wireguard:/etc/wireguard'
   ports:
    - 5555:5555/udp
-  restart: unless-stopped
   cap_add:
    - NET_ADMIN
    - SYS_MODULE

@@ -1,5 +1,13 @@
 # wireguard - vpn
 
+## first run
+
+If the wireguard kernel module is not already installed on the host system, use this first run command to install it:
+
+```bash
+docker run -it --rm --cap-add sys_module -v /lib/modules:/lib/modules cmulk/wireguard-docker:buster install-module
+```
+
 ## generate keys
 
 ```bash
@@ -31,5 +39,5 @@ wg-quick up wg0.conf
 ## disconnect
 
 ```bash
-wg-quick down /full/path/to/wg0.conf
+wg-quick down wg0.conf
 ```
