@@ -250,3 +250,8 @@ services:
   cap_add:
    - NET_ADMIN
    - SYS_MODULE
+  sysctls:
+    - "net.ipv4.ip_forward=1"
+    - "net.ipv6.conf.all.disable_ipv6=0"
+    - "net.ipv6.conf.all.forwarding=1"
+    - "net.ipv6.conf.default.forwarding=1"
