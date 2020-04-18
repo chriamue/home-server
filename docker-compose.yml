@@ -1,156 +1,156 @@
 version: "3"
 ##### services #####
 services:
-### ldap ###
- openldap:
-  build:
-   context: ./openldap
-  domainname: ${DOMAINNAME}
-  hostname: openldap
-  environment:
-    - LDAP_LOG_LEVEL=256
-    - LDAP_ORGANISATION=${LDAP_ORGANISATION}
-    - LDAP_DOMAIN=${LDAP_DOMAIN}
-    - LDAP_BASE_DN=${LDAP_BASE_DN}
-    - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
-    - LDAP_CONFIG_PASSWORD=${LDAP_CONFIG_PASSWORD}
-    - LDAP_READONLY_USER=true
-    - LDAP_READONLY_USER_USERNAME=readonly
-    - LDAP_READONLY_USER_PASSWORD=${LDAP_READONLY_PASSWORD}
-    - LDAP_BACKEND=hdb
-    - LDAP_TLS=true
-    - LDAP_TLS_CRT_FILENAME=ldap.crt
-    - LDAP_TLS_KEY_FILENAME=ldap.key
-    - LDAP_TLS_CA_CRT_FILENAME=ca.crt
-    - LDAP_TLS_ENFORCE=false
-    - LDAP_TLS_CIPHER_SUITE=SECURE256:-VERS-SSL3.0
-    - LDAP_TLS_PROTOCOL_MIN=3.1
-    - LDAP_TLS_VERIFY_CLIENT=demand
-    - LDAP_REPLICATION=false
-    #- LDAP_REPLICATION_CONFIG_SYNCPROV=binddn="cn=admin,cn=config" bindmethod=simple credentials=$LDAP_CONFIG_PASSWORD searchbase="cn=config" type=refreshAndPersist retry="60 +" timeout=1 starttls=critical
-    #- LDAP_REPLICATION_DB_SYNCPROV=binddn="cn=admin,$LDAP_BASE_DN" bindmethod=simple credentials=$LDAP_ADMIN_PASSWORD searchbase="$LDAP_BASE_DN" type=refreshAndPersist interval=00:00:00:10 retry="60 +" timeout=1 starttls=critical
-    #- LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://ldap.example.org','ldap://ldap2.example.org']
-    - LDAP_REMOVE_CONFIG_AFTER_SETUP=true
-    - LDAP_SSL_HELPER_PREFIX=ldap
-  tty: true
-  stdin_open: true
-  volumes:
-    - './srv/data/var/lib/ldap:/var/lib/ldap'
-    - './srv/data/etc/ldap/slapd.d:/etc/ldap/slapd.d'
-    #- './srv/data/container/service/slapd/assets/certs/:/container/service/slapd/assets/certs/'
-  ports:
-    #- "389:389"
-    - "636:636"
+  ### ldap ###
+  openldap:
+    build:
+      context: ./openldap
+    domainname: ${DOMAINNAME}
+    hostname: openldap
+    environment:
+      - LDAP_LOG_LEVEL=256
+      - LDAP_ORGANISATION=${LDAP_ORGANISATION}
+      - LDAP_DOMAIN=${LDAP_DOMAIN}
+      - LDAP_BASE_DN=${LDAP_BASE_DN}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+      - LDAP_CONFIG_PASSWORD=${LDAP_CONFIG_PASSWORD}
+      - LDAP_READONLY_USER=true
+      - LDAP_READONLY_USER_USERNAME=readonly
+      - LDAP_READONLY_USER_PASSWORD=${LDAP_READONLY_PASSWORD}
+      - LDAP_BACKEND=hdb
+      - LDAP_TLS=true
+      - LDAP_TLS_CRT_FILENAME=ldap.crt
+      - LDAP_TLS_KEY_FILENAME=ldap.key
+      - LDAP_TLS_CA_CRT_FILENAME=ca.crt
+      - LDAP_TLS_ENFORCE=false
+      - LDAP_TLS_CIPHER_SUITE=SECURE256:-VERS-SSL3.0
+      - LDAP_TLS_PROTOCOL_MIN=3.1
+      - LDAP_TLS_VERIFY_CLIENT=demand
+      - LDAP_REPLICATION=false
+      #- LDAP_REPLICATION_CONFIG_SYNCPROV=binddn="cn=admin,cn=config" bindmethod=simple credentials=$LDAP_CONFIG_PASSWORD searchbase="cn=config" type=refreshAndPersist retry="60 +" timeout=1 starttls=critical
+      #- LDAP_REPLICATION_DB_SYNCPROV=binddn="cn=admin,$LDAP_BASE_DN" bindmethod=simple credentials=$LDAP_ADMIN_PASSWORD searchbase="$LDAP_BASE_DN" type=refreshAndPersist interval=00:00:00:10 retry="60 +" timeout=1 starttls=critical
+      #- LDAP_REPLICATION_HOSTS=#PYTHON2BASH:['ldap://ldap.example.org','ldap://ldap2.example.org']
+      - LDAP_REMOVE_CONFIG_AFTER_SETUP=true
+      - LDAP_SSL_HELPER_PREFIX=ldap
+    tty: true
+    stdin_open: true
+    volumes:
+      - "./srv/data/var/lib/ldap:/var/lib/ldap"
+      - "./srv/data/etc/ldap/slapd.d:/etc/ldap/slapd.d"
+      #- './srv/data/container/service/slapd/assets/certs/:/container/service/slapd/assets/certs/'
+    ports:
+      #- "389:389"
+      - "636:636"
 
- ldapaccountmanager:
-  build:
-   context: ./ldap-account-manager
-  domainname: ${DOMAINNAME}
-  hostname: ldapaccountmanager
-  volumes:
-   - './srv/data/var/lib/ldap-account-manager/:/var/lib/ldap-account-manager/:rw'
-  depends_on:
-   - openldap
+  ldapaccountmanager:
+    build:
+      context: ./ldap-account-manager
+    domainname: ${DOMAINNAME}
+    hostname: ldapaccountmanager
+    volumes:
+      - "./srv/data/var/lib/ldap-account-manager/:/var/lib/ldap-account-manager/:rw"
+    depends_on:
+      - openldap
 
-### jenkins ###
- jenkins:
-  build:
-   context: ./jenkins
-  domainname: ${DOMAINNAME}
-  hostname: jenkins
-  volumes:
-   - './srv/data/var/jenkins_home:/var/jenkins_home'
-   - './srv/data/downloads:/downloads'
-  depends_on:
-   - openldap
-  ports:
-#  - "8080:8080"
-   - "50000:50000"
+  ### jenkins ###
+  jenkins:
+    build:
+      context: ./jenkins
+    domainname: ${DOMAINNAME}
+    hostname: jenkins
+    volumes:
+      - "./srv/data/var/jenkins_home:/var/jenkins_home"
+      - "./srv/data/downloads:/downloads"
+    depends_on:
+      - openldap
+    ports:
+      #  - "8080:8080"
+      - "50000:50000"
 
-### gitlab ###
- gitlab:
-  build:
-   context: ./gitlab
-  domainname: ${DOMAINNAME}
-  hostname: gitlab
-  environment:
-   GITLAB_OMNIBUS_CONFIG: |
-    external_url 'https://gitlab.${DOMAINNAME}'
-    registry_external_url 'https://gitlab.${DOMAINNAME}:4567'
-    mattermost_external_url 'https://mattermost.${DOMAINNAME}'
-    gitlab_rails['gitlab_shell_ssh_port'] = 2224
-    gitlab_rails['gitlab_email_from'] = 'gitlab@${DOMAINNAME}'
-    gitlab_rails['gitlab_email_reply_to'] = 'noreply@${DOMAINNAME}'
-    gitlab_rails['smtp_enable'] = true
-    gitlab_rails['smtp_address'] = "smtp.gmail.com"
-    gitlab_rails['smtp_port'] = 587
-    gitlab_rails['smtp_user_name'] = "${SMTP_USER_NAME}"
-    gitlab_rails['smtp_password'] = "${SMTP_USER_PASSWORD}"
-    gitlab_rails['smtp_domain'] = "smtp.gmail.com"
-    gitlab_rails['smtp_authentication'] = "login"
-    gitlab_rails['smtp_enable_starttls_auto'] = true
-    gitlab_rails['smtp_tls'] = false
-    gitlab_rails['smtp_openssl_verify_mode'] = 'peer' # Can be: 'none', 'peer', 'client_once', 'fail_if_no_peer_cert', see http://api.rubyonrails.org/classes/ActionMailer/Base.html
-    gitlab_rails['ldap_enabled'] = true
-    gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
-        main:
-          label: 'LDAP'
-          host: 'openldap'
-          port: 389
-          uid: 'uid'
-          method: 'plain' # "tls" or "ssl" or "plain"
-          bind_dn: 'cn=readonly,${LDAP_BASE_DN}'
-          password: '${LDAP_READONLY_PASSWORD}'
-          active_directory: false
-          allow_username_or_email_login: true
-          base: '${LDAP_BASE_DN}'
-    EOS
-  ulimits:
-   sigpending: 62793
-   nproc: 131072
-   nofile:
-    soft: 20000
-    hard: 40000
-   core: 0
+  ### gitlab ###
+  gitlab:
+    build:
+      context: ./gitlab
+    domainname: ${DOMAINNAME}
+    hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.${DOMAINNAME}'
+        registry_external_url 'https://gitlab.${DOMAINNAME}:4567'
+        mattermost_external_url 'https://mattermost.${DOMAINNAME}'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        gitlab_rails['gitlab_email_from'] = 'gitlab@${DOMAINNAME}'
+        gitlab_rails['gitlab_email_reply_to'] = 'noreply@${DOMAINNAME}'
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "smtp.gmail.com"
+        gitlab_rails['smtp_port'] = 587
+        gitlab_rails['smtp_user_name'] = "${SMTP_USER_NAME}"
+        gitlab_rails['smtp_password'] = "${SMTP_USER_PASSWORD}"
+        gitlab_rails['smtp_domain'] = "smtp.gmail.com"
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_tls'] = false
+        gitlab_rails['smtp_openssl_verify_mode'] = 'peer' # Can be: 'none', 'peer', 'client_once', 'fail_if_no_peer_cert', see http://api.rubyonrails.org/classes/ActionMailer/Base.html
+        gitlab_rails['ldap_enabled'] = true
+        gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
+            main:
+              label: 'LDAP'
+              host: 'openldap'
+              port: 389
+              uid: 'uid'
+              method: 'plain' # "tls" or "ssl" or "plain"
+              bind_dn: 'cn=readonly,${LDAP_BASE_DN}'
+              password: '${LDAP_READONLY_PASSWORD}'
+              active_directory: false
+              allow_username_or_email_login: true
+              base: '${LDAP_BASE_DN}'
+        EOS
+    ulimits:
+      sigpending: 62793
+      nproc: 131072
+      nofile:
+        soft: 20000
+        hard: 40000
+      core: 0
 
-  ports:
-#  - '80:80'
-   - '2224:22'
-   - '4567:4567'
-  volumes:
-   - './srv/data/gitlab/config:/etc/gitlab'
-   - './srv/data/gitlab/logs:/var/log/gitlab'
-   - './srv/data/gitlab/data:/var/opt/gitlab'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/ssl/gitlab.${DOMAINNAME}.key'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/ssl/mattermost.${DOMAINNAME}.key'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/ssl/gitlab.${DOMAINNAME}.crt'
-   - './srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/ssl/mattermost.${DOMAINNAME}.crt'
-   - '/etc/localtime:/etc/localtime:ro'
-  depends_on:
-   - openldap
+    ports:
+      #  - '80:80'
+      - "2224:22"
+      - "4567:4567"
+    volumes:
+      - "./srv/data/gitlab/config:/etc/gitlab"
+      - "./srv/data/gitlab/logs:/var/log/gitlab"
+      - "./srv/data/gitlab/data:/var/opt/gitlab"
+      - "./srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/ssl/gitlab.${DOMAINNAME}.key"
+      - "./srv/data/nginx/certs/live/${DOMAINNAME}/privkey.pem:/etc/gitlab/ssl/mattermost.${DOMAINNAME}.key"
+      - "./srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/ssl/gitlab.${DOMAINNAME}.crt"
+      - "./srv/data/nginx/certs/live/${DOMAINNAME}/fullchain.pem:/etc/gitlab/ssl/mattermost.${DOMAINNAME}.crt"
+      - "/etc/localtime:/etc/localtime:ro"
+    depends_on:
+      - openldap
 
- plantuml:
-  image: plantuml/plantuml-server:tomcat
+  plantuml:
+    image: plantuml/plantuml-server:tomcat
 
-### nextcloud ###
- nextcloud-db:
+  ### nextcloud ###
+  nextcloud-db:
     image: mariadb
     domainname: ${DOMAINNAME}
     volumes:
-      - './srv/data/nextcloud/db-data:/var/lib/mysql'
+      - "./srv/data/nextcloud/db-data:/var/lib/mysql"
     environment:
       - MYSQL_ROOT_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=${NEXTCLOUD_DB_PASSWORD}
 
- nextcloud-redis:
-   image: redis:alpine
-   domainname: ${DOMAINNAME}
-   volumes:
-      - './srv/data/nextcloud/redis-data:/data'
+  nextcloud-redis:
+    image: redis:alpine
+    domainname: ${DOMAINNAME}
+    volumes:
+      - "./srv/data/nextcloud/redis-data:/data"
 
- nextcloud:
+  nextcloud:
     build: nextcloud
     domainname: ${DOMAINNAME}
     hostname: nextcloud
@@ -175,83 +175,96 @@ services:
       - nextcloud-redis
       - openldap
     volumes:
-      - './srv/data/nextcloud/data:/data'
-      - './srv/data/nextcloud/config:/config'
-      - './srv/data/nextcloud/apps:/apps2'
+      - "./srv/data/nextcloud/data:/data"
+      - "./srv/data/nextcloud/config:/config"
+      - "./srv/data/nextcloud/apps:/apps2"
 
+  ### downloads ###
+  downloads:
+    build: ./downloads
+    domainname: ${DOMAINNAME}
+    hostname: downloads
+    volumes:
+      - "./srv/data/downloads:/usr/local/apache2/htdocs/:ro"
 
-### downloads ###
- downloads:
-  build: ./downloads
-  domainname: ${DOMAINNAME}
-  hostname: downloads
-  volumes:
-   - './srv/data/downloads:/usr/local/apache2/htdocs/:ro'
+  ### matomo web analytics
+  matomo:
+    image: wonderfall/matomo
+    links:
+      - db_matomo:db_matomo
+    volumes:
+      - "./srv/data/matomo/config:/config"
+    environment:
+      - GID=1000
+      - UID=1000
 
-### matomo web analytics
- matomo:
-  image: wonderfall/matomo
-  links:
-    - db_matomo:db_matomo
-  volumes:
-    - './srv/data/matomo/config:/config'
-  environment:
-    - GID=1000
-    - UID=1000
+  db_matomo:
+    image: mariadb:10
+    volumes:
+      - "./srv/data/matomo/db:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MATOMO_DB_PASSWORD}
+      - MYSQL_DATABASE=matomo
+      - MYSQL_USER=matomo
+      - MYSQL_PASSWORD=${MATOMO_DB_PASSWORD}
 
- db_matomo:
-  image: mariadb:10
-  volumes:
-    - './srv/data/matomo/db:/var/lib/mysql'
-  environment:
-    - MYSQL_ROOT_PASSWORD=${MATOMO_DB_PASSWORD}
-    - MYSQL_DATABASE=matomo
-    - MYSQL_USER=matomo
-    - MYSQL_PASSWORD=${MATOMO_DB_PASSWORD}
+    ### frp ### A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
 
-### nginx ###
- nginx:
-  build:
-   context: ./nginx
-  domainname: ${DOMAINNAME}
-  hostname: nginx
-  volumes:
-   - './srv/data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
-   - './srv/data/nginx/conf.d:/etc/nginx/conf.d:ro'
-   - './srv/data/nginx/certs:/etc/nginx/certs:ro'
-  ports:
-   - "80:80"
-   - "443:443"
-  depends_on:
-   - openldap
+  frp:
+    build:
+      context: ./frp
+    ports:
+      - "7000:7000/tcp"
+      - "7000:7000/udp"
+      - "7500:7500/tcp"
+      - "127.0.0.1:20000-20099:20000-20099/tcp"
+    volumes:
+      - ./srv/data/etc/frps.ini:/opt/frp/frps.ini
+    restart: always
 
- certbot:
-  image: certbot/certbot
-  domainname: ${DOMAINNAME}
-  hostname: certbot
-  command: 'certonly -n --standalone --agree-tos --email admin@${DOMAINNAME} -d ${DOMAINNAME} -d www.${DOMAINNAME} -d downloads.${DOMAINNAME} -d nextcloud.${DOMAINNAME} -d gitlab.${DOMAINNAME} -d jenkins.${DOMAINNAME}'
-  ports:
-   - "80:80"
-   - "443:443"
-  volumes:
-   - './srv/data/nginx/certs:/etc/letsencrypt:rw'
+  ### nginx ###
+  nginx:
+    build:
+      context: ./nginx
+    domainname: ${DOMAINNAME}
+    hostname: nginx
+    volumes:
+      - "./srv/data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./srv/data/nginx/conf.d:/etc/nginx/conf.d:ro"
+      - "./srv/data/nginx/certs:/etc/nginx/certs:ro"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - openldap
 
-### vpn ###
+  certbot:
+    image: certbot/certbot
+    domainname: ${DOMAINNAME}
+    hostname: certbot
+    command: "certonly -n --standalone --agree-tos --email admin@${DOMAINNAME} -d ${DOMAINNAME} -d www.${DOMAINNAME} -d downloads.${DOMAINNAME} -d nextcloud.${DOMAINNAME} -d gitlab.${DOMAINNAME} -d jenkins.${DOMAINNAME}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./srv/data/nginx/certs:/etc/letsencrypt:rw"
 
- vpn:
-  build:
-   context: ./wireguard
-  domainname: ${DOMAINNAME}
-  hostname: vpn
-  volumes:
-   - './srv/data/etc/wireguard:/etc/wireguard'
-  ports:
-   - 5555:5555/udp
-  cap_add:
-   - NET_ADMIN
-   - SYS_MODULE
-  sysctls:
-    - "net.ipv4.ip_forward=1"
-    - "net.ipv6.conf.all.disable_ipv6=0"
-    - "net.ipv6.conf.all.forwarding=1"
-    - "net.ipv6.conf.default.forwarding=1"
+  ### vpn ###
+
+  vpn:
+    build:
+      context: ./wireguard
+    domainname: ${DOMAINNAME}
+    hostname: vpn
+    volumes:
+      - "./srv/data/etc/wireguard:/etc/wireguard"
+    ports:
+      - 5555:5555/udp
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - "net.ipv4.ip_forward=1"
+      - "net.ipv6.conf.all.disable_ipv6=0"
+      - "net.ipv6.conf.all.forwarding=1"
+      - "net.ipv6.conf.default.forwarding=1"
