@@ -277,6 +277,3 @@ services:
     ports:
       - "2222:2222/tcp"
       - "2223:2223"
-    volumes:
-      - ${DATA_PATH}/cowrie/etc:/cowrie/cowrie-git/etc
-      - ${DATA_PATH}/cowrie/var:/cowrie/cowrie-git/var
