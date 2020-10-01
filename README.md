@@ -85,7 +85,7 @@ Start new SERVICE:
 
 ```docker-compose up -d SERVICE```
 
-## Tipps
+## Tips
 
 To test locally change `127.0.0.1 localhost jenkins.localhost lam.localhost gitlab.localhost`
 in your /etc/hosts file.
