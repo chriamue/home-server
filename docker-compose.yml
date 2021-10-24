@@ -184,8 +184,8 @@ services:
       - openldap
     volumes:
       - "${DATA_PATH}/nextcloud/data:/data"
-      - "${DATA_PATH}/nextcloud/config:/config"
-      - "${DATA_PATH}/nextcloud/apps:/apps2"
+      - "${DATA_PATH}/nextcloud/config:/nextcloud/config"
+      - "${DATA_PATH}/nextcloud/apps:/nextcloud/apps2"
 
   ### downloads ###
   downloads:
