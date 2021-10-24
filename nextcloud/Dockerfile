@@ -1,1 +1,1 @@
-FROM wonderfall/nextcloud:20
+FROM ghcr.io/wonderfall/nextcloud:22
