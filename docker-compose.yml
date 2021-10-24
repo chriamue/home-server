@@ -104,6 +104,14 @@ services:
               active_directory: false
               allow_username_or_email_login: true
               base: '${LDAP_BASE_DN}'
+              user_filter: ''
+              attributes:
+                username: ['uid', 'userid', 'sAMAccountName']
+                email: ['mail', 'email', 'userPrincipalName']
+                name: 'cn'
+                first_name: 'givenName'
+                last_name: 'sn'
+              lowercase_usernames: false
         EOS
     ulimits:
       sigpending: 62793
