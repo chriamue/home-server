@@ -149,6 +149,10 @@ Open Nextcloud in browser: [http://nextcloud.localhost]()
 
 Web server here used as proxy to the services.
 
+## [cloudflared](cloudflared/README.md)
+
+Argo tunnel as alternative to nginx proxy.
+
 ## [OpenLDAP](openldap/README.md)
 
 ## [downloads](downloads/README.md)

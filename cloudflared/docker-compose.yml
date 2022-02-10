@@ -1,0 +1,7 @@
+version: "3"
+services:
+  tunnel-ssh:
+    image: cloudflare/cloudflared:2022.2.0
+    command: tunnel --config /etc/cloudflared/ssh.yml --no-autoupdate run
+    volumes:
+      - "./.cloudflared/:/etc/cloudflared"
