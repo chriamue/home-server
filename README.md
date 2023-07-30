@@ -1,6 +1,10 @@
 # home-server
 Docker containers for a small server environment.
 
+This project aims to provide Docker configurations for a small server environment. It's primarily a personal documentation effort and may not be production-ready. It is maintained on an as-needed basis, meaning updates might be infrequent. However, it's open to anyone who wants a starting point or to learn more about creating a Docker-based server environment.
+
+## Supported Services
+
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
 * [jenkins](https://en.wikipedia.org/wiki/Jenkins_(software))
 * [mattermost](https://about.mattermost.com/)

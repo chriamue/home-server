@@ -5,7 +5,7 @@
 FROM alpine
 MAINTAINER kev <noreply@easypi.pro>
 
-ENV FRP_VERSION 0.32.1
+ENV FRP_VERSION 0.51.2
 ENV FRP_URL https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_amd64.tar.gz
 
 WORKDIR /opt/frp
