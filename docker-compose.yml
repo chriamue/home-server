@@ -195,28 +195,8 @@ services:
     volumes:
       - "${DATA_PATH}/downloads:/usr/local/apache2/htdocs/:ro"
 
-  ### matomo web analytics
-  matomo:
-    image: wonderfall/matomo
-    links:
-      - db_matomo:db_matomo
-    volumes:
-      - "${DATA_PATH}/matomo/config:/config"
-    environment:
-      - GID=1000
-      - UID=1000
 
-  db_matomo:
-    image: mariadb:10
-    volumes:
-      - "${DATA_PATH}/matomo/db:/var/lib/mysql"
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MATOMO_DB_PASSWORD}
-      - MYSQL_DATABASE=matomo
-      - MYSQL_USER=matomo
-      - MYSQL_PASSWORD=${MATOMO_DB_PASSWORD}
-
-    ### frp ### A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
+  ### frp ### A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
 
   frp:
     build:
