@@ -293,5 +293,5 @@ services:
     ports:
       - 9443:9443
     volumes:
-      - data:/${DATA_PATH}/portainer
+      - ${DATA_PATH}/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
