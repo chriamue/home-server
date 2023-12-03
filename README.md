@@ -36,13 +36,15 @@ Clone repository:
 
 Change into source directory:
 
-```cd developer-environment```
+```cd home-server```
 
 Create your own branch:
 
 ```git checkout -b configbranch```
 
 Edit compose for your needs:
+
+```cp example.env .env```
 
 ```vim .env```
 
@@ -55,6 +57,10 @@ Commit your changes:
 Build and download docker images:
 
 ```docker-compose build```
+
+Start portainer only:
+
+```docker-compose up -d --profile portainer portainer```
 
 Run docker compose:
 

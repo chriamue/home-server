@@ -270,6 +270,8 @@ services:
 
   portainer:
     image: portainer/portainer-ce:latest
+    profiles:
+      - portainer
     ports:
       - 9443:9443
     volumes:
