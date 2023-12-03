@@ -6,7 +6,6 @@ This project aims to provide Docker configurations for a small server environmen
 ## Supported Services
 
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
-* [mattermost](https://about.mattermost.com/)
 * [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
 * [nginx](https://en.wikipedia.org/wiki/Nginx)
 
@@ -77,7 +76,6 @@ Start them in following order.
 ```bash
 docker-compose start openldap
 docker-compose start ldapaccountmanager
-docker-compose start downloads
 docker-compose start gitlab
 docker-compose start nextcloud-db
 docker-compose start nextcloud
@@ -156,10 +154,6 @@ Open ldap account manager in browser: [http://lam.localhost]()
 
 Open Gitlab in browser: [http://gitlab.localhost]()
 
-## [Mattermost](gitlab/README.md)
-
-Open Mattermost in browser: [http://mattermost.localhost]()
-
 ## [Nextcloud](nextcloud/README.md)
 
 Open Nextcloud in browser: [http://nextcloud.localhost]()
@@ -173,7 +167,5 @@ Web server here used as proxy to the services.
 Argo tunnel as alternative to nginx proxy.
 
 ## [OpenLDAP](openldap/README.md)
-
-## [downloads](downloads/README.md)
 
 ## [backup](backup/README.md)

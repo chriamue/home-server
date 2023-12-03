@@ -126,7 +126,7 @@ services:
 
   ### nextcloud ###
   nextcloud-db:
-    image: mariadb
+    image: mariadb:11.2.2
     domainname: ${DOMAINNAME}
     volumes:
       - "${DATA_PATH}/nextcloud/db-data:/var/lib/mysql"
@@ -171,29 +171,6 @@ services:
       - "${DATA_PATH}/nextcloud/config:/nextcloud/config"
       - "${DATA_PATH}/nextcloud/apps:/nextcloud/apps2"
 
-  ### downloads ###
-  downloads:
-    build: ./downloads
-    domainname: ${DOMAINNAME}
-    hostname: downloads
-    volumes:
-      - "${DATA_PATH}/downloads:/usr/local/apache2/htdocs/:ro"
-
-
-  ### frp ### A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet.
-
-  frp:
-    build:
-      context: ./frp
-    ports:
-      - "7000:7000/tcp"
-      - "7000:7000/udp"
-      - "7500:7500/tcp"
-      - "127.0.0.1:20000-20099:20000-20099/tcp"
-    volumes:
-      - ${DATA_PATH}/etc/frps.ini:/opt/frp/frps.ini
-    restart: always
-
   ### nginx ###
   nginx:
     build:
@@ -214,6 +191,8 @@ services:
     image: certbot/certbot
     domainname: ${DOMAINNAME}
     hostname: certbot
+    profiles:
+      - certbot
     command: "certonly -n --standalone --agree-tos --email admin@${DOMAINNAME} -d ${DOMAINNAME} -d www.${DOMAINNAME} -d downloads.${DOMAINNAME} -d nextcloud.${DOMAINNAME} -d gitlab.${DOMAINNAME} -d jenkins.${DOMAINNAME}"
     ports:
       - "80:80"
@@ -240,15 +219,6 @@ services:
       - "net.ipv6.conf.all.disable_ipv6=0"
       - "net.ipv6.conf.all.forwarding=1"
       - "net.ipv6.conf.default.forwarding=1"
-
-
-  ### honeypot
-
-  honeypot:
-    image: cowrie/cowrie
-    ports:
-      - "2222:2222/tcp"
-      - "2223:2223"
 
   ### portainer ###
 
