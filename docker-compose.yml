@@ -108,7 +108,6 @@ services:
     ports:
       #  - '80:80'
       - "2224:22"
-      - "4567:4567"
     volumes:
       - "${DATA_PATH}/gitlab/config:/etc/gitlab"
       - "${DATA_PATH}/gitlab/logs:/var/log/gitlab"
