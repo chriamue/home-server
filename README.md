@@ -13,6 +13,21 @@ This project aims to provide Docker configurations for a small server environmen
 
 The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
+## Installing Portainer
+
+[Portainer](https://www.portainer.io/) is a lightweight management UI which allows you to easily manage your Docker host or Swarm cluster. It is particularly useful when setting up a home server environment as it provides a visual interface to manage Docker containers.
+
+To install Portainer, you can use the following Docker command:
+
+```bash
+docker volume create portainer_data
+docker run -d -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```
+
+This will pull the latest Portainer image from Docker Hub, create a new volume for storing data, and start a new container. The Portainer UI can then be accessed by navigating to http://<your-server-ip>:9443.
+
+For more detailed instructions, refer to the [official Portainer documentation](https://docs.portainer.io).
+
 ## Quick Start
 
 Clone repository:
