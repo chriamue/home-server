@@ -51,21 +51,6 @@ services:
     depends_on:
       - openldap
 
-  ### jenkins ###
-  jenkins:
-    build:
-      context: ./jenkins
-    domainname: ${DOMAINNAME}
-    hostname: jenkins
-    volumes:
-      - "${DATA_PATH}/var/jenkins_home:/var/jenkins_home"
-      - "${DATA_PATH}/downloads:/downloads"
-    depends_on:
-      - openldap
-    ports:
-      #  - "8080:8080"
-      - "50000:50000"
-
   ### gitlab ###
   gitlab:
     build:
@@ -268,7 +253,7 @@ services:
   ### portainer ###
 
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:2.19.3
     profiles:
       - portainer
     ports:

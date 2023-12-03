@@ -6,7 +6,6 @@ This project aims to provide Docker configurations for a small server environmen
 ## Supported Services
 
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
-* [jenkins](https://en.wikipedia.org/wiki/Jenkins_(software))
 * [mattermost](https://about.mattermost.com/)
 * [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
 * [nginx](https://en.wikipedia.org/wiki/Nginx)
@@ -21,7 +20,7 @@ To install Portainer, you can use the following Docker command:
 
 ```bash
 docker volume create portainer_data
-docker run -d -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+docker run -d -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.19.3
 ```
 
 This will pull the latest Portainer image from Docker Hub, create a new volume for storing data, and start a new container. The Portainer UI can then be accessed by navigating to http://<your-server-ip>:9443.
@@ -80,7 +79,6 @@ docker-compose start openldap
 docker-compose start ldapaccountmanager
 docker-compose start downloads
 docker-compose start gitlab
-docker-compose start jenkins
 docker-compose start nextcloud-db
 docker-compose start nextcloud
 docker-compose start nginx
@@ -153,10 +151,6 @@ update-permissions
 ## [lam](ldap-account-manager/README.md) (ldap account manager)
 
 Open ldap account manager in browser: [http://lam.localhost]()
-
-## [Jenkins](jenkins/README.md)
-
-Open Jenkins in browser: [http://jenkins.localhost]()
 
 ## [Gitlab](gitlab/README.md)
 
