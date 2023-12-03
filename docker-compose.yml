@@ -43,12 +43,11 @@ services:
       - "636:636"
 
   ldapaccountmanager:
-    build:
-      context: ./ldap-account-manager
+    image: ghcr.io/ldapaccountmanager/lam:8.5
     domainname: ${DOMAINNAME}
     hostname: ldapaccountmanager
     volumes:
-      - "${DATA_PATH}/var/lib/ldap-account-manager/:/var/lib/ldap-account-manager/:rw"
+      - "${DATA_PATH}/var/lib/ldap-account-manager/config:/var/lib/ldap-account-manager/config:rw"
     depends_on:
       - openldap
 
