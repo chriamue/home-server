@@ -30,7 +30,7 @@ services:
       - "--certificatesresolvers.certbot.acme.dnschallenge=true"
       - "--certificatesresolvers.certbot.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.certbot.acme.dnschallenge.delaybeforecheck=0"
-      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+      - "--certificatesresolvers.certbot.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
       - "--certificatesresolvers.certbot.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
