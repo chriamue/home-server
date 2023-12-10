@@ -65,7 +65,7 @@ services:
       - "DOMAINNAME=${DOMAINNAME}"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}` || `whoami`)
+      - traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}`) || Host(`whoami`)
       - traefik.http.routers.whoami.entrypoints=websecure
       - traefik.http.routers.whoami.tls.certresolver=letsencrypt
 
