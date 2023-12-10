@@ -23,17 +23,15 @@ services:
       - "--entrypoints.api.address=:8080"
       - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
       - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
-      - "--entryPoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entryPoints.web.http.redirections.entryPoint.permanent=true"
 
-      - "--certificatesresolvers.certbot.acme.httpchallenge=true"
-      - "--certificatesresolvers.certbot.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.certbot.acme.email=${ADMIN_EMAIL}"
-
-      - "--certificatesresolvers.certbot.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.certbot.acme.storage=/etc/traefik/acme.json"
-      - "--certificatesresolvers.certbot.acme.dnsChallenge=true"
-      - "--certificatesresolvers.certbot.acme.dnsChallenge.provider=cloudflare"
-      - "--certificatesresolvers.certbot.acme.dnsChallenge.delaybeforecheck=0"
+      - "--certificatesresolvers.certbot.acme.dnschallenge=true"
+      - "--certificatesresolvers.certbot.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.certbot.acme.dnschallenge.delaybeforecheck=0"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+      - "--certificatesresolvers.certbot.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - CF_API_EMAIL=${CLOUDFLARE_EMAIL}
@@ -67,6 +65,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}`) || Host(`whoami`)
       - traefik.http.routers.whoami.entrypoints=websecure
+      - traefik.http.routers.whoami.tls=true
       - traefik.http.routers.whoami.tls.certresolver=letsencrypt
 
   ### ldap ###
