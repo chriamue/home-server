@@ -243,35 +243,6 @@ services:
       - "traefik.http.routers.nextcloud.service=nextcloud"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=8888"
 
-  ### nginx ###
-  nginx:
-    build:
-      context: ./nginx
-    domainname: ${DOMAINNAME}
-    hostname: nginx
-    volumes:
-      - "${DATA_PATH}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "${DATA_PATH}/nginx/conf.d:/etc/nginx/conf.d:ro"
-      - "${DATA_PATH}/nginx/certs:/etc/nginx/certs:ro"
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - openldap
-
-  certbot:
-    image: certbot/certbot
-    domainname: ${DOMAINNAME}
-    hostname: certbot
-    profiles:
-      - certbot
-    command: "certonly -n --standalone --agree-tos --email admin@${DOMAINNAME} -d ${DOMAINNAME} -d www.${DOMAINNAME} -d downloads.${DOMAINNAME} -d nextcloud.${DOMAINNAME} -d gitlab.${DOMAINNAME} -d jenkins.${DOMAINNAME}"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "${DATA_PATH}/nginx/certs:/etc/letsencrypt:rw"
-
   ### vpn ###
 
   vpn:
