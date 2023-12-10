@@ -237,6 +237,14 @@ services:
       - "${DATA_PATH}/nextcloud/data:/data"
       - "${DATA_PATH}/nextcloud/config:/nextcloud/config"
       - "${DATA_PATH}/nextcloud/apps:/nextcloud/apps2"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAINNAME}`) || Host(`nextcloud`)"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.tls.certresolver=http_resolver"
+      - "traefik.http.routers.nextcloud.service=nextcloud"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
 
   ### nginx ###
   nginx:
