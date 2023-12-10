@@ -42,7 +42,7 @@ services:
       - "443:443"
       - "8080:8080"
     volumes:
-      - "${DATA_PATH}/traefik/acme.json:/etc/traefik/acme.json"
+      - "${DATA_PATH}/traefik/config/:/etc/traefik/"
       - "${DATA_PATH}/traefik/logs/:/logs/"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "/etc/localtime:/etc/localtime:ro"
@@ -66,7 +66,7 @@ services:
       - traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}`) || Host(`whoami`)
       - traefik.http.routers.whoami.entrypoints=websecure
       - traefik.http.routers.whoami.tls=true
-      - traefik.http.routers.whoami.tls.certresolver=letsencrypt
+      - traefik.http.routers.whoami.tls.certresolver=certbot
 
   ### ldap ###
   openldap:
