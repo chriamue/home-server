@@ -187,6 +187,14 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     depends_on:
       - openldap
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitlab.entrypoints=websecure"
+      - "traefik.http.routers.gitlab.rule=Host(`gitlab.${DOMAINNAME}`) || Host(`gitlab`)"
+      - "traefik.http.routers.gitlab.tls=true"
+      - "traefik.http.routers.gitlab.tls.certresolver=http_resolver"
+      - "traefik.http.routers.gitlab.service=gitlab"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
 
   plantuml:
     image: plantuml/plantuml-server:tomcat
@@ -244,7 +252,7 @@ services:
       - "traefik.http.routers.nextcloud.tls=true"
       - "traefik.http.routers.nextcloud.tls.certresolver=http_resolver"
       - "traefik.http.routers.nextcloud.service=nextcloud"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=8888"
 
   ### nginx ###
   nginx:
