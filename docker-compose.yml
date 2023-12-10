@@ -108,6 +108,23 @@ services:
     depends_on:
       - openldap
 
+  ### kanidm ###
+  kanidm:
+    container_name: kanidm
+    image: kanidm/server:1.1.0-rc.15
+    volumes:
+      - ${DATA_PATH}/kanidm:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.kanidm.entrypoints=websecure
+      - traefik.http.routers.kanidm.rule=Host(`idm.${DOMAINNAME}`)
+      - traefik.http.routers.kanidm.service=kanidm
+      - traefik.http.serversTransports.kanidm.insecureSkipVerify=true
+      - traefik.http.services.kanidm.loadbalancer.server.port=8443
+      - traefik.http.services.kanidm.loadbalancer.server.scheme=https
+      - "traefik.http.routers.kanidm.tls=true"
+      - "traefik.http.routers.kanidm.tls.certresolver=certbot"
+
   ### gitlab ###
   gitlab:
     build:
