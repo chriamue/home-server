@@ -31,11 +31,9 @@ services:
       - "--certificatesresolvers.certbot.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.certbot.acme.dnschallenge.delaybeforecheck=0"
       - "--certificatesresolvers.certbot.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
-      - "--certificatesresolvers.certbot.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
-      - CF_API_EMAIL=${CLOUDFLARE_EMAIL}
-      - CF_API_KEY=${CLOUDFLARE_API_KEY}
+      - CF_DNS_API_KEY=${CLOUDFLARE_DNS_API_TOKEN}
       - TRAEFIK_CREDENTIALS=${TRAEFIK_CREDENTIALS}
     ports:
       - "80:80"
@@ -195,7 +193,7 @@ services:
       - "traefik.http.routers.gitlab-secure.entrypoints=https"
       - "traefik.http.routers.gitlab-secure.rule=Host(`git.example.com`)"
       - "traefik.http.routers.gitlab-secure.tls=true"
-      - "traefik.http.routers.gitlab-secure.tls.certresolver=websecure"
+      - "traefik.http.routers.gitlab-secure.tls.certresolver=certbot"
       - "traefik.http.routers.gitlab-secure.service=gitlab"
       - "traefik.http.services.gitlab.loadbalancer.server.port=80"
 
@@ -253,7 +251,7 @@ services:
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
       - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAINNAME}`)"
       - "traefik.http.routers.nextcloud.tls=true"
-      - "traefik.http.routers.nextcloud.tls.certresolver=http_resolver"
+      - "traefik.http.routers.nextcloud.tls.certresolver=certbot"
       - "traefik.http.routers.nextcloud.service=nextcloud"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=8888"
 
