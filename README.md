@@ -7,7 +7,7 @@ This project aims to provide Docker configurations for a small server environmen
 
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
 * [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
-* [nginx](https://en.wikipedia.org/wiki/Nginx)
+* [traefik](https://en.wikipedia.org/wiki/Traefik)
 
 The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
@@ -74,12 +74,12 @@ After a reboot you have to restart the services manually.
 Start them in following order.
 
 ```bash
-docker-compose start openldap
-docker-compose start ldapaccountmanager
-docker-compose start gitlab
-docker-compose start nextcloud-db
-docker-compose start nextcloud
-docker-compose start nginx
+docker-compose restart openldap
+docker-compose restart ldapaccountmanager
+docker-compose restart gitlab
+docker-compose restart nextcloud-db
+docker-compose restart nextcloud
+docker-compose restart traefik
 ```
 
 ## update git repo
