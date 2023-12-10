@@ -33,7 +33,7 @@ services:
       - "--certificatesresolvers.certbot.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
-      - CF_DNS_API_KEY=${CLOUDFLARE_DNS_API_TOKEN}
+      - CF_DNS_API_TOKEN=${CLOUDFLARE_DNS_API_TOKEN}
       - TRAEFIK_CREDENTIALS=${TRAEFIK_CREDENTIALS}
     ports:
       - "80:80"
