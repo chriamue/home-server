@@ -62,11 +62,11 @@ services:
     environment:
       - "DOMAINNAME=${DOMAINNAME}"
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}`) || Host(`whoami`)
-      - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.tls=true
-      - traefik.http.routers.whoami.tls.certresolver=certbot
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.${DOMAINNAME}`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls=true"
+      - "traefik.http.routers.whoami.tls.certresolver=certbot"
 
   ### ldap ###
   openldap:
@@ -189,7 +189,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitlab.entrypoints=websecure"
-      - "traefik.http.routers.gitlab.rule=Host(`gitlab.${DOMAINNAME}`) || Host(`gitlab`)"
+      - "traefik.http.routers.gitlab.rule=Host(`gitlab.${DOMAINNAME}`)"
       - "traefik.http.middlewares.gitlab-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.gitlab.middlewares=gitlab-https-redirect"
       - "traefik.http.routers.gitlab-secure.entrypoints=https"
@@ -251,7 +251,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAINNAME}`) || Host(`nextcloud`)"
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAINNAME}`)"
       - "traefik.http.routers.nextcloud.tls=true"
       - "traefik.http.routers.nextcloud.tls.certresolver=http_resolver"
       - "traefik.http.routers.nextcloud.service=nextcloud"
