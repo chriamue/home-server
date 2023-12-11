@@ -12,6 +12,7 @@ services:
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--serverstransport.insecureskipverify=true"
 
       - "--log.level=DEBUG"
       - "--log.filePath=/logs/traefik.log"
