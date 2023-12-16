@@ -1,0 +1,36 @@
+@startuml Deployment Diagram
+
+!define TraefikNode component
+!define ServiceNode component
+
+node "Docker Host" {
+    TraefikNode Traefik
+    ServiceNode Whoami
+    ServiceNode OpenLDAP
+    ServiceNode LdapAccountManager
+    ServiceNode Kanidm
+    ServiceNode Gitlab
+    node "Nextcloud Stack" {
+        ServiceNode Nextcloud
+        ServiceNode NextcloudDB
+        ServiceNode NextcloudRedis
+    }
+    ServiceNode Vaultwarden
+    ServiceNode VPN
+    ServiceNode Portainer
+
+    Traefik -down-> Whoami : routes
+    Traefik -down-> Kanidm : routes
+    Traefik -down-> Gitlab : routes
+    Traefik -down-> Nextcloud : routes
+    Traefik -down-> Vaultwarden : routes
+
+    Gitlab -left-> OpenLDAP : auth
+    Nextcloud -right-> OpenLDAP : auth
+    LdapAccountManager -up-> OpenLDAP : manage
+
+    Nextcloud -down-> NextcloudDB : db
+    Nextcloud -down-> NextcloudRedis : cache
+}
+
+@enduml

@@ -3,11 +3,19 @@ Docker containers for a small server environment.
 
 This project aims to provide Docker configurations for a small server environment. It's primarily a personal documentation effort and may not be production-ready. It is maintained on an as-needed basis, meaning updates might be infrequent. However, it's open to anyone who wants a starting point or to learn more about creating a Docker-based server environment.
 
+![deployment diagram](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/chriamue/home-server/master/deployment.puml)
+
 ## Supported Services
 
 * [gitlab](https://en.wikipedia.org/wiki/GitLab)
 * [nextcloud](https://en.wikipedia.org/wiki/Nextcloud)
 * [traefik](https://en.wikipedia.org/wiki/Traefik)
+* whoami - A simple container that responds with its container ID, useful for testing load balancing and proxying.
+* kanidm - A modern, secure and fast identity management platform.
+* vaultwarden - An unofficial Bitwarden compatible server written in Rust.
+* vpn - WireGuard VPN for secure networking.
+* plantuml - A tool for creating UML diagrams from a plain text language.
+* openldap - OpenLDAP software for Lightweight Directory Access Protocol.
 
 The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
