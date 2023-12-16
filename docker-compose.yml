@@ -7,30 +7,7 @@ services:
     domainname: ${DOMAINNAME}
     hostname: traefik
     command:
-      - "--api.insecure=true"
-      - "--api.dashboard=true"
-      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--serverstransport.insecureskipverify=true"
-
-      - "--log.level=DEBUG"
-      - "--log.filePath=/logs/traefik.log"
-      - "--accessLog.filePath=/logs/access.log"
-      - "--accessLog.bufferingSize=100"
-
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
-      - "--entryPoints.web.http.redirections.entryPoint.permanent=true"
-
       - "--certificatesresolvers.certbot.acme.email=${ADMIN_EMAIL}"
-      - "--certificatesresolvers.certbot.acme.storage=/etc/traefik/acme.json"
-      - "--certificatesresolvers.certbot.acme.dnschallenge=true"
-      - "--certificatesresolvers.certbot.acme.dnschallenge.provider=cloudflare"
-      - "--certificatesresolvers.certbot.acme.dnschallenge.delaybeforecheck=0"
-      - "--certificatesresolvers.certbot.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - CF_DNS_API_TOKEN=${CLOUDFLARE_DNS_API_TOKEN}

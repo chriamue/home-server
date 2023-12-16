@@ -1,0 +1,17 @@
+# homeassistant.yml
+
+http:
+  routers:
+    homeassistant-router:
+      rule: "Host(`whoami.${DOMAINNAME}`)"
+      service: homeassistant-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: certbot
+
+  services:
+    homeassistant-service:
+      loadBalancer:
+        servers:
+          - url: "http://homeassistant.local:8123"
