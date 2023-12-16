@@ -3,7 +3,7 @@
 http:
   routers:
     homeassistant-router:
-      rule: "Host(`whoami.${DOMAINNAME}`)"
+      rule: "Host(`homeassistant.${DOMAINNAME}`)"
       service: homeassistant-service
       entryPoints:
         - websecure
