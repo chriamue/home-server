@@ -290,3 +290,29 @@ services:
       - ${DATA_PATH}/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
 
+  ### LLM AI ###
+
+  ollama:
+    volumes:
+      - ${DATA_PATH}/ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:${OPEN_WEBUI_DOCKER_TAG-main}
+    container_name: open-webui
+    volumes:
+      - ${DATA_PATH}/open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    environment:
+      - 'OLLAMA_BASE_URL=http://ollama:11434'
+      - 'WEBUI_SECRET_KEY='
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.open-webui.entrypoints=websecure"
+      - "traefik.http.routers.open-webui.rule=Host(`open-webui.${DOMAINNAME}`)"
+      - "traefik.http.routers.open-webui.tls=true"
+      - "traefik.http.routers.open-webui.tls.certresolver=certbot"
+      - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
