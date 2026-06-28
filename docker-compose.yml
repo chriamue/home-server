@@ -337,7 +337,7 @@ services:
     volumes:
       - ./aisix/config.yaml:/etc/aisix/config.yaml:ro
     environment:
-      - AISIX_ADMIN_KEY=${AISIX_ADMIN_KEY}
+      - GATEWAY_ADMIN_KEY=${AISIX_ADMIN_KEY}
     depends_on:
       - etcd
     labels:

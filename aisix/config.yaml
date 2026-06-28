@@ -12,7 +12,7 @@ proxy:
 admin:
   addr: "0.0.0.0:3001"
   admin_keys:
-    - "${AISIX_ADMIN_KEY}"
+    - "${GATEWAY_ADMIN_KEY}"
 
 observability:
   service_name: "aisix"
