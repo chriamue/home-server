@@ -18,12 +18,17 @@ node "Docker Host" {
     ServiceNode Vaultwarden
     ServiceNode VPN
     ServiceNode Portainer
+    node "AISIX AI Gateway Stack" {
+        ServiceNode Aisix
+        ServiceNode Etcd
+    }
 
     Traefik -down-> Whoami : routes
     Traefik -down-> Kanidm : routes
     Traefik -down-> Gitlab : routes
     Traefik -down-> Nextcloud : routes
     Traefik -down-> Vaultwarden : routes
+    Traefik -down-> Aisix : routes (aisix.*, aisix-admin.*)
 
     Gitlab -left-> OpenLDAP : auth
     Nextcloud -right-> OpenLDAP : auth
@@ -31,6 +36,8 @@ node "Docker Host" {
 
     Nextcloud -down-> NextcloudDB : db
     Nextcloud -down-> NextcloudRedis : cache
+
+    Aisix -down-> Etcd : config store
 }
 
 @enduml

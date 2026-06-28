@@ -16,6 +16,9 @@ This project aims to provide Docker configurations for a small server environmen
 * vpn - WireGuard VPN for secure networking.
 * plantuml - A tool for creating UML diagrams from a plain text language.
 * openldap - OpenLDAP software for Lightweight Directory Access Protocol.
+* ollama - Local LLM inference engine.
+* open-webui - Browser UI for Ollama.
+* aisix - OpenAI-compatible AI gateway with routing, rate limiting, caching, and guardrails.
 
 The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
@@ -177,3 +180,21 @@ Argo tunnel as alternative to nginx proxy.
 ## [OpenLDAP](openldap/README.md)
 
 ## [backup](backup/README.md)
+
+## AISIX AI Gateway
+
+[AISIX](https://github.com/api7/aisix) is a Rust-native AI gateway that exposes a single OpenAI-compatible API in front of multiple LLM providers.
+
+- Proxy API: `https://aisix.${DOMAINNAME}/v1/` — drop-in `base_url` for any OpenAI SDK
+- Admin UI / playground: `https://aisix-admin.${DOMAINNAME}/admin/openapi-scalar`
+
+Set `AISIX_ADMIN_KEY` in your `.env` before starting. Configuration (models, API keys, policies) is managed at runtime via the admin API and stored in etcd — no restart required.
+
+Register the local Ollama instance as a provider:
+
+```bash
+curl -X POST https://aisix-admin.${DOMAINNAME}/providers \
+  -H "X-Admin-Key: ${AISIX_ADMIN_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"ollama","provider_type":"openai","base_url":"http://ollama:11434/v1","api_key":"ollama"}'
+```
