@@ -319,13 +319,28 @@ services:
 
   ### litellm AI gateway ###
 
+  litellm-db:
+    image: postgres:17
+    container_name: litellm-db
+    environment:
+      - POSTGRES_USER=litellm
+      - POSTGRES_PASSWORD=${LITELLM_DB_PASSWORD}
+      - POSTGRES_DB=litellm
+    volumes:
+      - "${DATA_PATH}/litellm/db:/var/lib/postgresql/data"
+
   litellm:
     image: litellm/litellm:v1.90.0
     container_name: litellm
+    depends_on:
+      - litellm-db
     volumes:
       - ./litellm/config.yaml:/app/config.yaml:ro
     environment:
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
+      - LITELLM_SALT_KEY=${LITELLM_SALT_KEY}
+      - DATABASE_URL=postgresql://litellm:${LITELLM_DB_PASSWORD}@litellm-db:5432/litellm
+      - STORE_MODEL_IN_DB=True
     command: ["--config", "/app/config.yaml"]
     labels:
       - "traefik.enable=true"
