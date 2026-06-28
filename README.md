@@ -18,7 +18,7 @@ This project aims to provide Docker configurations for a small server environmen
 * openldap - OpenLDAP software for Lightweight Directory Access Protocol.
 * ollama - Local LLM inference engine.
 * open-webui - Browser UI for Ollama.
-* aisix - OpenAI-compatible AI gateway with routing, rate limiting, caching, and guardrails.
+* litellm - OpenAI-compatible AI gateway supporting 100+ LLM providers.
 
 The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
@@ -181,20 +181,11 @@ Argo tunnel as alternative to nginx proxy.
 
 ## [backup](backup/README.md)
 
-## AISIX AI Gateway
+## LiteLLM AI Gateway
 
-[AISIX](https://github.com/api7/aisix) is a Rust-native AI gateway that exposes a single OpenAI-compatible API in front of multiple LLM providers.
+[LiteLLM](https://github.com/BerriAI/litellm) is an OpenAI-compatible proxy that supports 100+ LLM providers.
 
-- Proxy API: `https://aisix.${DOMAINNAME}/v1/` — drop-in `base_url` for any OpenAI SDK
-- Admin UI / playground: `https://aisix-admin.${DOMAINNAME}/admin/openapi-scalar`
+- API: `https://litellm.${DOMAINNAME}/v1/` — drop-in `base_url` for any OpenAI SDK
+- UI: `https://litellm.${DOMAINNAME}/ui`
 
-Set `AISIX_ADMIN_KEY` in your `.env` before starting. Configuration (models, API keys, policies) is managed at runtime via the admin API and stored in etcd — no restart required.
-
-Register the local Ollama instance as a provider:
-
-```bash
-curl -X POST https://aisix-admin.${DOMAINNAME}/providers \
-  -H "X-Admin-Key: ${AISIX_ADMIN_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{"name":"ollama","provider_type":"openai","base_url":"http://ollama:11434/v1","api_key":"ollama"}'
-```
+Set `LITELLM_MASTER_KEY` in your `.env` before starting. Models are configured in `litellm/config.yaml`. The local Ollama instance is pre-configured as a provider.

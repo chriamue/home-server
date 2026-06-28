@@ -307,8 +307,8 @@ services:
     depends_on:
       - ollama
     environment:
-      - 'OLLAMA_BASE_URL=http://ollama:11434'
-      - 'WEBUI_SECRET_KEY='
+      - "OLLAMA_BASE_URL=http://ollama:11434"
+      - "WEBUI_SECRET_KEY="
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.open-webui.entrypoints=websecure"
@@ -317,42 +317,22 @@ services:
       - "traefik.http.routers.open-webui.tls.certresolver=certbot"
       - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
 
-  ### aisix AI gateway ###
+  ### litellm AI gateway ###
 
-  etcd:
-    image: quay.io/coreos/etcd:v3.5.18
-    container_name: etcd
-    command:
-      - /usr/local/bin/etcd
-      - --advertise-client-urls=http://etcd:2379
-      - --listen-client-urls=http://0.0.0.0:2379
+  litellm:
+    image: litellm/litellm:v1.90.0
+    container_name: litellm
     volumes:
-      - "${DATA_PATH}/etcd:/etcd-data"
+      - ./litellm/config.yaml:/app/config.yaml:ro
     environment:
-      - ETCD_DATA_DIR=/etcd-data
-
-  aisix:
-    image: ghcr.io/api7/aisix:latest
-    container_name: aisix
-    volumes:
-      - ./aisix/config.yaml:/etc/aisix/config.yaml:ro
-    environment:
-      - GATEWAY_ADMIN_KEY=${AISIX_ADMIN_KEY}
-    depends_on:
-      - etcd
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
+    command: ["--config", "/app/config.yaml"]
     labels:
       - "traefik.enable=true"
-      # proxy API
-      - "traefik.http.routers.aisix-proxy.entrypoints=websecure"
-      - "traefik.http.routers.aisix-proxy.rule=Host(`aisix.${DOMAINNAME}`)"
-      - "traefik.http.routers.aisix-proxy.tls=true"
-      - "traefik.http.routers.aisix-proxy.tls.certresolver=certbot"
-      - "traefik.http.routers.aisix-proxy.service=aisix-proxy"
-      - "traefik.http.services.aisix-proxy.loadbalancer.server.port=3000"
-      # admin API
-      - "traefik.http.routers.aisix-admin.entrypoints=websecure"
-      - "traefik.http.routers.aisix-admin.rule=Host(`aisix-admin.${DOMAINNAME}`)"
-      - "traefik.http.routers.aisix-admin.tls=true"
-      - "traefik.http.routers.aisix-admin.tls.certresolver=certbot"
-      - "traefik.http.routers.aisix-admin.service=aisix-admin"
-      - "traefik.http.services.aisix-admin.loadbalancer.server.port=3001"
+      - "traefik.http.routers.litellm.entrypoints=websecure"
+      - "traefik.http.routers.litellm.rule=Host(`litellm.${DOMAINNAME}`)"
+      - "traefik.http.routers.litellm.tls=true"
+      - "traefik.http.routers.litellm.tls.certresolver=certbot"
+      - "traefik.http.routers.litellm.service=litellm"
+      - "traefik.http.services.litellm.loadbalancer.server.port=4000"
+      - "traefik.http.services.litellm.loadbalancer.server.scheme=http"
