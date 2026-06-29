@@ -343,5 +343,7 @@ services:
       - "traefik.http.routers.agentgateway-admin.tls=true"
       - "traefik.http.routers.agentgateway-admin.tls.certresolver=certbot"
       - "traefik.http.routers.agentgateway-admin.service=agentgateway-admin"
+      - "traefik.http.routers.agentgateway-admin.middlewares=agentgateway-auth"
+      - "traefik.http.middlewares.agentgateway-auth.basicauth.users=${AGENTGATEWAY_ADMIN_USERS}"
       - "traefik.http.services.agentgateway-admin.loadbalancer.server.port=15000"
       - "traefik.http.services.agentgateway-admin.loadbalancer.server.scheme=http"
