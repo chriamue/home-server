@@ -317,37 +317,31 @@ services:
       - "traefik.http.routers.open-webui.tls.certresolver=certbot"
       - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
 
-  ### litellm AI gateway ###
+  ### agentgateway ###
 
-  litellm-db:
-    image: postgres:17
-    container_name: litellm-db
+  agentgateway:
+    image: cr.agentgateway.dev/agentgateway:v1.3.1
+    container_name: agentgateway
+    user: "1000:1000"
     environment:
-      - POSTGRES_USER=litellm
-      - POSTGRES_PASSWORD=${LITELLM_DB_PASSWORD}
-      - POSTGRES_DB=litellm
+      - ADMIN_ADDR=0.0.0.0:15000
     volumes:
-      - "${DATA_PATH}/litellm/db:/var/lib/postgresql/data"
-
-  litellm:
-    image: litellm/litellm:v1.90.0
-    container_name: litellm
-    depends_on:
-      - litellm-db
-    volumes:
-      - ./litellm/config.yaml:/app/config.yaml:ro
-    environment:
-      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
-      - LITELLM_SALT_KEY=${LITELLM_SALT_KEY}
-      - DATABASE_URL=postgresql://litellm:${LITELLM_DB_PASSWORD}@litellm-db:5432/litellm
-      - STORE_MODEL_IN_DB=True
-    command: ["--config", "/app/config.yaml"]
+      - "${DATA_PATH}/agentgateway/config:/config"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.litellm.entrypoints=websecure"
-      - "traefik.http.routers.litellm.rule=Host(`litellm.${DOMAINNAME}`)"
-      - "traefik.http.routers.litellm.tls=true"
-      - "traefik.http.routers.litellm.tls.certresolver=certbot"
-      - "traefik.http.routers.litellm.service=litellm"
-      - "traefik.http.services.litellm.loadbalancer.server.port=4000"
-      - "traefik.http.services.litellm.loadbalancer.server.scheme=http"
+      # proxy
+      - "traefik.http.routers.agentgateway.entrypoints=websecure"
+      - "traefik.http.routers.agentgateway.rule=Host(`agentgateway.${DOMAINNAME}`)"
+      - "traefik.http.routers.agentgateway.tls=true"
+      - "traefik.http.routers.agentgateway.tls.certresolver=certbot"
+      - "traefik.http.routers.agentgateway.service=agentgateway"
+      - "traefik.http.services.agentgateway.loadbalancer.server.port=3000"
+      - "traefik.http.services.agentgateway.loadbalancer.server.scheme=http"
+      # admin UI
+      - "traefik.http.routers.agentgateway-admin.entrypoints=websecure"
+      - "traefik.http.routers.agentgateway-admin.rule=Host(`agentgateway-admin.${DOMAINNAME}`)"
+      - "traefik.http.routers.agentgateway-admin.tls=true"
+      - "traefik.http.routers.agentgateway-admin.tls.certresolver=certbot"
+      - "traefik.http.routers.agentgateway-admin.service=agentgateway-admin"
+      - "traefik.http.services.agentgateway-admin.loadbalancer.server.port=15000"
+      - "traefik.http.services.agentgateway-admin.loadbalancer.server.scheme=http"

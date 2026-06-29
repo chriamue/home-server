@@ -18,7 +18,7 @@ This project aims to provide Docker configurations for a small server environmen
 * openldap - OpenLDAP software for Lightweight Directory Access Protocol.
 * ollama - Local LLM inference engine.
 * open-webui - Browser UI for Ollama.
-* litellm - OpenAI-compatible AI gateway supporting 100+ LLM providers.
+* agentgateway - AI agent gateway with admin UI, MCP support, and multi-provider routing.
 
 The users will be managed using [ldap](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol).
 
@@ -181,11 +181,11 @@ Argo tunnel as alternative to nginx proxy.
 
 ## [backup](backup/README.md)
 
-## LiteLLM AI Gateway
+## Agent Gateway
 
-[LiteLLM](https://github.com/BerriAI/litellm) is an OpenAI-compatible proxy that supports 100+ LLM providers.
+[agentgateway](https://agentgateway.dev) is an AI agent gateway with MCP support and multi-provider routing.
 
-- API: `https://litellm.${DOMAINNAME}/v1/` — drop-in `base_url` for any OpenAI SDK
-- UI: `https://litellm.${DOMAINNAME}/ui`
+- Proxy: `https://agentgateway.${DOMAINNAME}/`
+- Admin UI: `https://agentgateway-admin.${DOMAINNAME}/ui`
 
-Set `LITELLM_MASTER_KEY` in your `.env` before starting. Models are configured in `litellm/config.yaml`. The local Ollama instance is pre-configured as a provider.
+Config persists in `${DATA_PATH}/agentgateway/config/`. No database required.

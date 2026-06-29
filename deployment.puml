@@ -18,14 +18,14 @@ node "Docker Host" {
     ServiceNode Vaultwarden
     ServiceNode VPN
     ServiceNode Portainer
-    ServiceNode LiteLLM
+    ServiceNode AgentGateway
 
     Traefik -down-> Whoami : routes
     Traefik -down-> Kanidm : routes
     Traefik -down-> Gitlab : routes
     Traefik -down-> Nextcloud : routes
     Traefik -down-> Vaultwarden : routes
-    Traefik -down-> LiteLLM : routes (litellm.*)
+    Traefik -down-> AgentGateway : routes (agentgateway.*)
 
     Gitlab -left-> OpenLDAP : auth
     Nextcloud -right-> OpenLDAP : auth
@@ -34,7 +34,7 @@ node "Docker Host" {
     Nextcloud -down-> NextcloudDB : db
     Nextcloud -down-> NextcloudRedis : cache
 
-    LiteLLM -down-> Ollama : routes requests
+    AgentGateway -down-> Ollama : routes requests
 }
 
 @enduml
