@@ -335,7 +335,7 @@ services:
       - "traefik.http.routers.agentgateway.tls=true"
       - "traefik.http.routers.agentgateway.tls.certresolver=certbot"
       - "traefik.http.routers.agentgateway.service=agentgateway"
-      - "traefik.http.services.agentgateway.loadbalancer.server.port=3000"
+      - "traefik.http.services.agentgateway.loadbalancer.server.port=4000"
       - "traefik.http.services.agentgateway.loadbalancer.server.scheme=http"
       # admin UI
       - "traefik.http.routers.agentgateway-admin.entrypoints=websecure"
